@@ -91,9 +91,20 @@ endm
     msg6 db 13,10, 'FIM!!!$'
     msg7 db 13,10, 'OPCAO INVALIDA, TENTE NOVAMENTE!!! $'
     msg8 db 13,10, 'OPERACAO IMPOSSIVEL, TENTE NOVAMENTE!!! $'
+    msg9 db 'Negativo!!! $'
+
+    
 
 .code
     main proc
+
+    mov ah, 06h    ; scroll up function
+	xor al, al     ; clear entire screen
+	xor cx, cx     ; upper left corner ch=row, cl=column
+	mov dx, 184fh  ; lower right corner dh=row, dl=column 
+	mov bh, 70h
+	int 10h
+
     
     repetir1:
 
@@ -171,17 +182,22 @@ endm
     subtracao: ;jump para subtracao
         ;digitar os numeros
         numeros
-
+        cmp bh, ch
+        jl menor
         sub bh, ch
         add bh, 30h
-
 
         mov dl, bh
         mov ah, 02
         int 21h
 
-       
         jmp fim
+
+        menor:
+            mov ah, 09
+            lea dx, msg9
+            int 21h
+            jmp fim
 
 
     multi: ;jump para multiplicacao
