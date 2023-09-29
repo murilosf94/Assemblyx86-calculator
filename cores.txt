@@ -6,3 +6,7 @@
 ;    5 = Purple      D = Light Purple
 ;    6 = Yellow      E = Light Yellow
 ;    7 = White       F = Bright White
+
+PT-BR: No código hexadecimal da 105ª linha, o primeiro número representa a cor do background, e o segundo representa a cor da letra.
+
+ENG: In the hexadecimal code on the 105th line, the first number represents the background color, and the second represents the letter color.
