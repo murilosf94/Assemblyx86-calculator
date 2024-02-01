@@ -1,5 +1,15 @@
 .model small
 
+pulalinha macro
+    mov ah, 02
+    mov dl, 13
+    int 21h
+
+    mov ah, 02
+    mov dl, 10
+    int 21h
+endm
+
 numeros macro
     local lenum, leenter, outrojump, segundonum, continua, lenum1, leenter1, outrojump1
 
@@ -83,6 +93,7 @@ endm
 .data
     menu db 13,10,13, 10, 'Qual operacao deseja efetuar?? $'
     menu1 db 13,10, '1- SOMA // 2- SUBTRACAO // 3- MULTIPLICACAO // 4- DIVISAO: $'
+    menu2 db 13, 10, 'Qual outra operacao deseja efetuar?? $'
     msg1 db 13,10, 'Digite o primeiro numero: $'
     msg2 db 13,10, 'Digite o segundo numero: $'
     msg3 db 13,10, 'O resultado e: $'
@@ -92,6 +103,10 @@ endm
     msg7 db 13,10, 'OPCAO INVALIDA, TENTE NOVAMENTE!!! $'
     msg8 db 13,10, 'OPERACAO IMPOSSIVEL, TENTE NOVAMENTE!!! $'
     msg9 db 'Negativo!!! $'
+    msg10 db 13,10, '============================================$'
+    msg11 db 13,10, 'SEJA BEM VINDO A CALCULADORA$'
+    msg12 db 13,10, 'VOCE SELECIONOU PARA CONTINUAR PARA OUTRA OPERACAO$'
+
 
     
 
@@ -106,10 +121,20 @@ endm
 	int 10h
 
     
-    repetir1:
 
     mov ax, @data
     mov ds, ax
+
+    ;imprimir mensagem de boas vindas
+    mov ah, 09
+    lea dx, msg10
+    int 21h
+    mov ah, 09
+    lea dx, msg11
+    int 21h
+    mov ah, 09
+    lea dx, msg10
+    int 21h
 
     ;imprimir o menu
     mov ah, 09
@@ -117,6 +142,34 @@ endm
     int 21h
     lea dx, menu1
     int 21h
+
+
+    jmp continuanormal
+
+    repetir1:
+    ;imprimir texto inicial para outra operação
+    pulalinha
+    pulalinha
+    mov ah, 09
+    lea dx, msg10
+    int 21h
+    mov ah, 09
+    lea dx, msg12
+    int 21h
+    mov ah, 09
+    lea dx, msg10
+    int 21h
+    pulalinha
+    pulalinha
+
+    ;imprimir o menu para outra operação
+    mov ah, 09
+    lea dx, menu2
+    int 21h
+    lea dx, menu1
+    int 21h
+
+    continuanormal:
 
     mov ah, 01
     int 21h
@@ -268,6 +321,7 @@ endm
     
     fim:
 
+        pulalinha
         mov ah, 09
         lea dx, msg5
         int 21h
